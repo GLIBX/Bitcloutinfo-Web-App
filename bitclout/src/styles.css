@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
 }
 
 code {
@@ -12,7 +13,24 @@ code {
     monospace;
 }
 
-.App {
-  background-color: white;
-  color: black;
+
+.logo {
+  width: 50px;
+  height: 40px;
+}
+
+.RateCard {
+  height: 10vh;
+  width: 15vw;
+  font-size: 12px;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 2px 2px;
+}
+
+.CreatorsCard {
+  height: 50vh;
+  width: 80vw;
+  font-size: 1rem;
 }
