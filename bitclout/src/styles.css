@@ -13,15 +13,26 @@ code {
     monospace;
 }
 
+.header {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  float: left;
+}
 
 .logo {
-  width: 50px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
+  margin-right: 1.5rem;
+  margin-left: 1rem;
+  float: left;
 }
 
 .RateCard {
   height: 10vh;
-  width: 15vw;
+  width: 14vw;
   font-size: 12px;
   font-weight: bolder;
   justify-content: center;
@@ -30,7 +41,7 @@ code {
 }
 
 .CreatorsCard {
-  height: 50vh;
-  width: 80vw;
+  height: 80vh;
+  width: 81vw;
   font-size: 1rem;
 }

@@ -1,6 +1,6 @@
 import Header from './components/Header'
 import RateCard from './components/RateCard'
-import { Row, Col, Card } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import CreatorsList from './components/CreatorsList'
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
           <CreatorsList />
         </Col>
       </Row>
+      <hr></hr>
     </>
   );
 }
