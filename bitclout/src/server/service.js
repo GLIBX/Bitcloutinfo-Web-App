@@ -2,7 +2,7 @@ import axios from "axios";
 
 export function getBitcloutPrice() {
   return axios
-    .get("http://0.0.0.0:5000/api/v1/get-bitclout-price")
+    .get("https://api-bitclout.herokuapp.com/api/v1/get-bitclout-price")
     .then((resp) => {
       return resp.data;
     })
@@ -14,7 +14,7 @@ export function getBitcloutPrice() {
 
 export function getProfiles() {
   return axios
-    .post("http://0.0.0.0:5000/api/v1/get-profiles", {
+    .post("https://api-bitclout.herokuapp.com/api/v1/get-profiles", {
       PublicKeyBase58Check: "",
       Username: null,
       UsernamePrefix: null,
