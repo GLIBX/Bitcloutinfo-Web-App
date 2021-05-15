@@ -32,7 +32,7 @@ code {
 
 .RateCard {
   height: 10vh;
-  width: 14vw;
+  width: 10vw;
   font-size: 12px;
   font-weight: bolder;
   justify-content: center;
@@ -40,8 +40,48 @@ code {
   box-shadow: 0px 2px 2px 2px;
 }
 
+.WishlistCard {
+  height: 30vh;
+  width: 15vw;
+  font-size: 12px;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 2px 2px;
+}
+
+.CoinInfoCard {
+  height: auto;
+  width: 15vw;
+  font-size: 10px;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 2px 2px;
+}
+
 .CreatorsCard {
-  height: 80vh;
+  height: auto;
   width: 81vw;
   font-size: 1rem;
+}
+
+.topGainers {
+  border-bottom: 2px black solid;
+  width: 7vw
+}
+
+.coinInfoHeader {
+  border-bottom: 2px black solid;
+  width: 10vw
+}
+
+
+.noInfoText {
+  opacity: 0.4;
+  font-size: .8rem;
+  margin: 2vw;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

@@ -1,7 +1,8 @@
 import Header from './components/Header'
-import RateCard from './components/RateCard'
+import SideBar from './components/SideBar'
+// import Footer from './components/Footer'
 import { Row, Col } from 'react-bootstrap'
-import CreatorsList from './components/CreatorsList'
+import CreatorsList from './components/Creators'
 
 function App() {
   return (
@@ -9,13 +10,13 @@ function App() {
       <Header />
       <Row>
         <Col md="2">
-          <RateCard />
+          <SideBar />
         </Col>
         <Col md="10">
           <CreatorsList />
         </Col>
       </Row>
-      <hr></hr>
+      {/* <Footer /> */}
     </>
   );
 }
