@@ -37,7 +37,7 @@ code {
   font-weight: bolder;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 2px 2px 2px;
+  box-shadow: 2px 0px 2px 0px;
 }
 
 .WishlistCard {
@@ -47,7 +47,7 @@ code {
   font-weight: bolder;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 2px 2px 2px;
+  box-shadow: 2px 0px 2px 0px;
 }
 
 .CoinInfoCard {
@@ -57,7 +57,7 @@ code {
   font-weight: bolder;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 2px 2px 2px;
+  box-shadow: 2px 0px 2px 0px;
 }
 
 .CreatorsCard {

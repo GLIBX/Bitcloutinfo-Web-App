@@ -13,47 +13,52 @@ const SideBar = () => {
   };
 
   const fetchGainers = async () => {
-    await Promise.all([getTopGainers()]).then((resp) => {
-      let gainers = [];
+    await Promise.all([getTopGainers()])
+      .then((resp) => {
+        let gainers = [];
 
-      for (const [index, gainer] of resp[0].ProfilesFound.entries()) {
-        gainers.push(
-          <Col md="10" className="pt-3" key={index}>
-            <Row>
-              <Col md="2">
-                <img
-                  src={gainer.ProfilePic}
-                  alt="pic"
-                  width="25px"
-                  height="25px"
-                ></img>
-              </Col>
-              <Col md="5">
-                <h6 style={{ fontSize: "13px" }}>
-                  {gainer.Username}{" "}
-                  {gainer.IsVerified ? (
-                    <img
-                      src="https://img.icons8.com/fluent/48/000000/good-quality.png"
-                      alt=""
-                      width="12px"
-                      height="12px"
-                    ></img>
-                  ) : (
-                    ""
-                  )}
-                </h6>
-              </Col>
-              <Col md="5">
-                <h6 style={{ color: "green" }}>
-                  {computeCoinPrice(gainer.CoinPriceBitCloutNanos)}
-                </h6>
-              </Col>
-            </Row>
-          </Col>
-        );
-      }
-      setTopGainers(gainers);
-    });
+        for (const [index, gainer] of resp[0].ProfilesFound.entries()) {
+          gainers.push(
+            <Col md="10" className="pt-3" key={index}>
+              <Row>
+                <Col md="2">
+                  <img
+                    src={gainer.ProfilePic}
+                    alt="pic"
+                    width="25px"
+                    height="25px"
+                  ></img>
+                </Col>
+                <Col md="5">
+                  <h6 style={{ fontSize: "13px" }}>
+                    {gainer.Username}{" "}
+                    {gainer.IsVerified ? (
+                      <img
+                        src="https://img.icons8.com/fluent/48/000000/good-quality.png"
+                        alt=""
+                        width="12px"
+                        height="12px"
+                      ></img>
+                    ) : (
+                      ""
+                    )}
+                  </h6>
+                </Col>
+                <Col md="5">
+                  <h6 style={{ color: "green" }}>
+                    {computeCoinPrice(gainer.CoinPriceBitCloutNanos)}
+                  </h6>
+                </Col>
+              </Row>
+            </Col>
+          );
+        }
+        setTopGainers(gainers);
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
   };
 
   useEffect(() => {
@@ -80,11 +85,11 @@ const SideBar = () => {
           <h6 className="coinInfoHeader pt-3">Creator's Bitclout Info</h6>
         </Col>
         <Col md="10" className="infoSection p-1">
-        {
-          showInfo ? null : (
-            <h4 className="noInfoText">Click View Creator's Coin To See Data Here!</h4>
-          )
-        }
+          {showInfo ? null : (
+            <h4 className="noInfoText">
+              Click View Creator's Coin To See Data Here!
+            </h4>
+          )}
         </Col>
       </Card>
     </>

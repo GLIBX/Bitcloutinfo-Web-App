@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { lighten, makeStyles } from "@material-ui/core/styles";
+import { lighten, withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
+// import Button from "@material-ui/core/Button";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -17,9 +18,10 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { getBitcloutPrice, getProfiles } from "../server/service";
+
+
 
 const computeCoinPrice = (coinPriceNanos) => {
   let price =
@@ -69,13 +71,19 @@ const headCells = [
     id: "index",
     numeric: false,
     disablePadding: false,
-    label: "#",
+    label: "Rank",
   },
   {
     id: "name",
     numeric: false,
     disablePadding: false,
     label: "Username",
+  },
+  {
+    id: "IsReserved",
+    numeric: true,
+    disablePadding: false,
+    label: "Reserved",
   },
   {
     id: "IsVerified",
@@ -90,6 +98,12 @@ const headCells = [
     label: "Coin Price",
   },
   {
+    id: "holders",
+    numeric: true,
+    disablePadding: false,
+    label: "Coin Holders" 
+  },
+  {
     id: "founderReward",
     numeric: true,
     disablePadding: false,
@@ -101,7 +115,14 @@ const headCells = [
     disablePadding: false,
     label: "Total USD Locked",
   },
+  {
+    id: "",
+    numeric: false,
+    disablePadding: false,
+    label: "" 
+  }
 ];
+
 
 function EnhancedTableHead(props) {
   const { classes, order, orderBy, onRequestSort } = props;
@@ -124,7 +145,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <h3 className={classes.headers}>{headCell.label}</h3>
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
@@ -165,6 +186,9 @@ const useToolbarStyles = makeStyles((theme) => ({
         },
   title: {
     flex: "1 1 100%",
+    fontFamily: "Roboto",
+    fontSize: '1.6rem',
+    fontWeight: "600",
   },
 }));
 
@@ -175,7 +199,7 @@ const EnhancedTableToolbar = (props) => {
     <Toolbar className={clsx(classes.root)}>
       <Typography
         className={classes.title}
-        variant="h6"
+        variant="h5"
         id="tableTitle"
         component="div"
       >
@@ -191,7 +215,6 @@ const EnhancedTableToolbar = (props) => {
   );
 };
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "2vh",
@@ -203,9 +226,14 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: "100%",
     marginBottom: theme.spacing(2),
+    boxShadow: "2px 0px 2px 2px",
   },
   table: {
-    minWidth: 750,
+    minWidth: "40vw",
+  },
+  headers: {
+    fontSize: "15px",
+    fontWeight: 600,
   },
   visuallyHidden: {
     border: 0,
@@ -218,6 +246,10 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  helpText: {
+    fontSize: "12px",
+    paddingLeft: "0.5rem",
+  }
 }));
 
 export default function CreatorsList() {
@@ -227,7 +259,8 @@ export default function CreatorsList() {
   const [creators, setCreators] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [loading, setLoading] = React.useState(true);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -253,35 +286,38 @@ export default function CreatorsList() {
 
   const fetchProfiles = async () => {
     await Promise.all([getProfiles(), getBitcloutPrice()])
-    .then((resp) => {
-      localStorage.setItem("bitclout_price", resp[1]["bitclout_price"]);
-      let newCreators = [];
-      console.log(resp)
+      .then((resp) => {
+        localStorage.setItem("bitclout_price", resp[1]["bitclout_price"]);
+        let newCreators = [];
+        console.log(resp);
 
-      for (const [index, creator] of resp[0].ProfilesFound.entries()) {
-        newCreators.push({
-          index: index + 1,
-          name: creator.Username,
-          profilePic: creator.ProfilePic,
-          IsVerified: creator.IsVerified ? "✔️" : "❌",
-          coinPrice: computeCoinPrice(creator.CoinPriceBitCloutNanos),
-          founderReward: computeFounderReward(
-            creator.CoinEntry.CreatorBasisPoints
-          ),
-          totalUSDLocked: computeTotalUsdLocked(
-            creator.CoinEntry.BitCloutLockedNanos
-          ),
-          posts: creator.Posts,
-        });
-      }
+        for (const [index, creator] of resp[0].ProfilesFound.entries()) {
+          console.log(creator)
+          newCreators.push({
+            index: index + 1,
+            name: creator.Username,
+            profilePic: creator.ProfilePic,
+            IsReserved: creator.IsReserved ? "✔️": "-",
+            IsVerified: creator.IsVerified ? "✔️" : "❌",
+            coinPrice: computeCoinPrice(creator.CoinPriceBitCloutNanos),
+            founderReward: computeFounderReward(
+              creator.CoinEntry.CreatorBasisPoints
+            ),
+            totalUSDLocked: computeTotalUsdLocked(
+              creator.CoinEntry.BitCloutLockedNanos
+            ),
+            coinHolders: creator.CoinEntry.NumberOfHolders,
+            posts: creator.Posts,
+          });
+        }
 
-      setCreators(newCreators)
-    })
-    .catch((err) => {
-      console.log(err);
-      return err;
-    });
-};
+        setCreators(newCreators);
+      })
+      .catch((err) => {
+        console.log(err);
+        return err;
+      });
+  };
 
   React.useEffect(() => {
     fetchProfiles();
@@ -296,7 +332,7 @@ export default function CreatorsList() {
             className={classes.table}
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
-            aria-label="table"
+            aria-label="customized table"
           >
             <EnhancedTableHead
               classes={classes}
@@ -313,19 +349,44 @@ export default function CreatorsList() {
 
                   return (
                     <TableRow hover tabIndex={-1} key={row.index}>
-                      <TableCell align="left">{row.index}</TableCell>
+                      <TableCell align="left">
+                        {row.index}
+                      </TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
                         padding="none"
                       >
+                        <img
+                          src={row.profilePic}
+                          alt="pic"
+                          width="40px"
+                          height="40px"
+                        ></img>{" "}
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.IsVerified}</TableCell>
-                      <TableCell align="right">{row.coinPrice}</TableCell>
-                      <TableCell align="right">{row.founderReward}</TableCell>
-                      <TableCell align="right">{row.totalUSDLocked}</TableCell>
+                      <TableCell align="right">
+                        {row.IsReserved}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.IsVerified}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.coinPrice}
+                      </TableCell>
+                      <TableCell align="right" style={{"color": "green"}}>
+                        {row.coinHolders}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.founderReward}
+                      </TableCell>
+                      <TableCell align="right">
+                        {row.totalUSDLocked}
+                      </TableCell>
+                      <TableCell align="right">
+                        <button>View</button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -346,6 +407,7 @@ export default function CreatorsList() {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
+        <Typography className={classes.helpText} variant="h6">(Filter through the data by hovering on the headers and click on the arrow pointer that appears)</Typography>
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
