@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Card, Row, Col } from "react-bootstrap";
+import BounceLoader from "react-spinners/BounceLoader";
 import { getTopGainers } from "../server/service";
 
 const SideBar = () => {
   const [topGainers, setTopGainers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showInfo] = useState(false);
 
   const computeCoinPrice = (coinPriceNanos) => {
@@ -54,6 +56,7 @@ const SideBar = () => {
           );
         }
         setTopGainers(gainers);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -78,7 +81,7 @@ const SideBar = () => {
         <Col md="10">
           <h6 className="topGainers">Top Gainers</h6>
         </Col>
-        {topGainers}
+        {loading ? <BounceLoader color="black" size="50" /> : topGainers}
       </Card>
       <Card bg="light" className="CoinInfoCard m-4">
         <Col md="10">

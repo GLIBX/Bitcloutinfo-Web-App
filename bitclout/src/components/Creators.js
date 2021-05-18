@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { css } from "@emotion/core";
 import clsx from "clsx";
 import { lighten, withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -20,8 +21,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { getBitcloutPrice, getProfiles } from "../server/service";
-
-
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const computeCoinPrice = (coinPriceNanos) => {
   let price =
@@ -101,7 +101,7 @@ const headCells = [
     id: "holders",
     numeric: true,
     disablePadding: false,
-    label: "Coin Holders" 
+    label: "Coin Holders",
   },
   {
     id: "founderReward",
@@ -119,10 +119,9 @@ const headCells = [
     id: "",
     numeric: false,
     disablePadding: false,
-    label: "" 
-  }
+    label: "",
+  },
 ];
-
 
 function EnhancedTableHead(props) {
   const { classes, order, orderBy, onRequestSort } = props;
@@ -187,7 +186,7 @@ const useToolbarStyles = makeStyles((theme) => ({
   title: {
     flex: "1 1 100%",
     fontFamily: "Roboto",
-    fontSize: '1.6rem',
+    fontSize: "1.6rem",
     fontWeight: "600",
   },
 }));
@@ -249,7 +248,7 @@ const useStyles = makeStyles((theme) => ({
   helpText: {
     fontSize: "12px",
     paddingLeft: "0.5rem",
-  }
+  },
 }));
 
 export default function CreatorsList() {
@@ -292,12 +291,12 @@ export default function CreatorsList() {
         console.log(resp);
 
         for (const [index, creator] of resp[0].ProfilesFound.entries()) {
-          console.log(creator)
+          console.log(creator);
           newCreators.push({
             index: index + 1,
             name: creator.Username,
             profilePic: creator.ProfilePic,
-            IsReserved: creator.IsReserved ? "✔️": "-",
+            IsReserved: creator.IsReserved ? "✔️" : "-",
             IsVerified: creator.IsVerified ? "✔️" : "❌",
             coinPrice: computeCoinPrice(creator.CoinPriceBitCloutNanos),
             founderReward: computeFounderReward(
@@ -312,6 +311,7 @@ export default function CreatorsList() {
         }
 
         setCreators(newCreators);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -322,6 +322,13 @@ export default function CreatorsList() {
   React.useEffect(() => {
     fetchProfiles();
   }, []);
+
+  // Can be a string as well. Need to ensure each key-value pair ends with ;
+  const override = css`
+    display: relative;
+    justifycontent: "center";
+    alignitems: "center";
+  `;
 
   return (
     <div className={classes.root}>
@@ -341,61 +348,67 @@ export default function CreatorsList() {
               onRequestSort={handleRequestSort}
               rowCount={creators.length}
             />
-            <TableBody>
-              {stableSort(creators, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const labelId = `enhanced-table-checkbox-${index}`;
+            {loading ? (
+              <TableBody>
+                <div className="loader">
+                  <ScaleLoader
+                    color="black"
+                    loading={loading}
+                    css={override}
+                    height={50}
+                    width={5}
+                    radius={5}
+                    margin={2}
+                  />
+                </div>
+              </TableBody>
+            ) : (
+              <TableBody>
+                {stableSort(creators, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow hover tabIndex={-1} key={row.index}>
-                      <TableCell align="left">
-                        {row.index}
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        <img
-                          src={row.profilePic}
-                          alt="pic"
-                          width="40px"
-                          height="40px"
-                        ></img>{" "}
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.IsReserved}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.IsVerified}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.coinPrice}
-                      </TableCell>
-                      <TableCell align="right" style={{"color": "green"}}>
-                        {row.coinHolders}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.founderReward}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.totalUSDLocked}
-                      </TableCell>
-                      <TableCell align="right">
-                        <button>View</button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
+                    return (
+                      <TableRow hover tabIndex={-1} key={row.index}>
+                        <TableCell align="left">{row.index}</TableCell>
+                        <TableCell
+                          component="th"
+                          id={labelId}
+                          scope="row"
+                          padding="none"
+                        >
+                          <img
+                            src={row.profilePic}
+                            alt="pic"
+                            width="40px"
+                            height="40px"
+                          ></img>{" "}
+                          {row.name}
+                        </TableCell>
+                        <TableCell align="right">{row.IsReserved}</TableCell>
+                        <TableCell align="right">{row.IsVerified}</TableCell>
+                        <TableCell align="right">{row.coinPrice}</TableCell>
+                        <TableCell align="right" style={{ color: "green" }}>
+                          {row.coinHolders}
+                        </TableCell>
+                        <TableCell align="right">{row.founderReward}</TableCell>
+                        <TableCell align="right">
+                          {row.totalUSDLocked}
+                        </TableCell>
+                        <TableCell align="right">
+                          <button>View</button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            )}
           </Table>
         </TableContainer>
         <TablePagination
@@ -407,7 +420,10 @@ export default function CreatorsList() {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
-        <Typography className={classes.helpText} variant="h6">(Filter through the data by hovering on the headers and click on the arrow pointer that appears)</Typography>
+        <Typography className={classes.helpText} variant="h6">
+          (Filter through the data by hovering on the headers and click on the
+          arrow pointer that appears)
+        </Typography>
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}

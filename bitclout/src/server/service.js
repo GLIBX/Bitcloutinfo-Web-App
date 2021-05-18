@@ -20,7 +20,7 @@ export function getProfiles() {
       UsernamePrefix: null,
       Description: null,
       OrderBy: "influencer_coin_price",
-      NumToFetch: 14,
+      NumToFetch: 140,
       ReaderPublicKeyBase58Check:
         "BC1YLiZ3Jgat6FKmWR8mcZEyW5JkGghspJtSX3WVijnL87kV1sD9Npo",
       ModerationType: "leaderboard",

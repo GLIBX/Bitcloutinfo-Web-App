@@ -76,6 +76,13 @@ code {
   width: 10vw
 }
 
+.loader {
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 10%;
+  margin-left: 8vw;
+}
 
 .noInfoText {
   opacity: 0.4;
