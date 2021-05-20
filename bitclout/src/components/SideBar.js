@@ -3,10 +3,10 @@ import { Card, Row, Col } from "react-bootstrap";
 import BounceLoader from "react-spinners/BounceLoader";
 import { getTopGainers } from "../server/service";
 
-const SideBar = () => {
+const SideBar = (props) => {
   const [topGainers, setTopGainers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   const computeCoinPrice = (coinPriceNanos) => {
     let price =
@@ -68,6 +68,14 @@ const SideBar = () => {
     fetchGainers();
   });
 
+  useEffect(() => {
+    if (props.creator == null) {
+      setShowInfo(false)
+    } else {
+      setShowInfo(true)
+    }
+  }, [setShowInfo, props.creator])
+
   return (
     <>
       <Card bg="light" className="RateCard m-4">
@@ -88,7 +96,10 @@ const SideBar = () => {
           <h6 className="coinInfoHeader pt-3">Creator's Bitclout Info</h6>
         </Col>
         <Col md="10" className="infoSection p-1">
-          {showInfo ? null : (
+          {showInfo ? (
+              <h6>{props.creator.name}</h6>
+
+          ) : (
             <h4 className="noInfoText">
               Click View Creator's Coin To See Data Here!
             </h4>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { css } from "@emotion/core";
 import clsx from "clsx";
-import { lighten, withStyles, makeStyles } from "@material-ui/core/styles";
+import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 // import Button from "@material-ui/core/Button";
 import TableBody from "@material-ui/core/TableBody";
@@ -251,7 +251,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreatorsList() {
+export default function CreatorsList(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("index");
@@ -397,7 +397,7 @@ export default function CreatorsList() {
                           {row.totalUSDLocked}
                         </TableCell>
                         <TableCell align="right">
-                          <button>View</button>
+                          <button onClick={(row) => props.setCreator(row)}>View</button>
                         </TableCell>
                       </TableRow>
                     );
