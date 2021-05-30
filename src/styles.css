@@ -42,6 +42,7 @@ code {
 .WishlistCard {
   height: 30vh;
   width: 15vw;
+  margin-left: 1.3vw;
   font-size: 12px;
   font-weight: bolder;
   justify-content: center;
@@ -66,8 +67,13 @@ code {
 }
 
 .topGainers {
+  padding-top: 10px;
+}
+
+.topGainersText {
+  width: 7vw;
   border-bottom: 2px black solid;
-  width: 7vw
+  margin-bottom: 30px;
 }
 
 .coinInfoHeader {
@@ -90,4 +96,70 @@ code {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+
+@media (max-width: 600px) {
+
+  .header {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    float: left;
+  }
+
+  .headerSearch {
+    display: none !important;
+  }
+
+  .RateCard {
+    height: 10vh;
+    width: 70vw;
+    font-size: 1rem;
+    font-weight: bolder;
+    justify-content: center;
+    align-items: left;
+    box-shadow: 1px 0px 1px 0px;
+  }
+  
+  .WishlistCard {
+    height: 60vh;
+    width: 70vw;
+    margin: 1.5rem;
+    font-size: 0.6rem;
+    font-weight: bolder;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 0px 1px 0px;
+  }
+  
+  .CoinInfoCard {
+    display: none !important;
+  }
+
+  .CreatorsCard {
+    height: auto;
+    width: 81vw;
+    font-size: 1rem;
+  }
+
+  .topGainers {
+    position: relative;
+    display: flex;
+    align-items: left;
+    padding-top: 0.01rem;
+    text-orientation: sideways-right;
+    width: 60vw;
+    /* text-align-last: justify !important; */
+    border-bottom: 1px rgb(63, 23, 23) dashed;
+  }
+  
+  .topGainersText {
+    width: auto;
+    font-size: 1.1rem;
+    border-bottom: 2px black solid;
+  }
+  
 }

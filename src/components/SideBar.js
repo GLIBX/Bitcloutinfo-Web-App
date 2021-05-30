@@ -21,18 +21,18 @@ const SideBar = (props) => {
 
         for (const [index, gainer] of resp[0].ProfilesFound.entries()) {
           gainers.push(
-            <Col md="10" className="pt-3" key={index}>
+            <Col md="10" className="topGainers" key={index}>
               <Row>
                 <Col md="2">
                   <img
                     src={gainer.ProfilePic}
                     alt="pic"
-                    width="25px"
-                    height="25px"
+                    width="15vw"
+                    height="15vh"
                   ></img>
                 </Col>
                 <Col md="5">
-                  <h6 style={{ fontSize: "13px" }}>
+                  <h6 style={{ fontSize: "0.9rem" }}>
                     {gainer.Username}{" "}
                     {gainer.IsVerified ? (
                       <img
@@ -85,9 +85,9 @@ const SideBar = (props) => {
           <h6>~${localStorage.getItem("bitclout_price")} per coin</h6>
         </Col>
       </Card>
-      <Card bg="light" className="WishlistCard m-4">
+      <Card bg="light" className="WishlistCard">
         <Col md="10">
-          <h6 className="topGainers">Top Gainers</h6>
+          <h6 className="topGainersText">Top Gainers</h6>
         </Col>
         {loading ? <BounceLoader color="black" size="50" /> : topGainers}
       </Card>
