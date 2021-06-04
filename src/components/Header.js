@@ -17,7 +17,7 @@ const HeaderTab = () => {
           {/* <Col md="1"></Col> */}
           <Col sm="4" md="8">
             <Container className="text-left">
-              <Navbar.Brand href="#home"><img src={Logo} alt="logo" className="logo"></img> <h2 className="header">MyBitcloutInfo</h2></Navbar.Brand>
+              <Navbar.Brand href="#home"><img src={Logo} alt="logo" className="logo"></img> <h2 className="header">BitcloutInfo</h2></Navbar.Brand>
             </Container>
           </Col>
           <Col sm="8" md="4" className="headerSearch">
