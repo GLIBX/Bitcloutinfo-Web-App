@@ -380,7 +380,7 @@ export default function CreatorsList(props) {
                         >
                           <img
                             src={row.profilePic}
-                            alt="pic"
+                            alt={row.profilePic}
                             width="40px"
                             height="40px"
                           ></img>{" "}
