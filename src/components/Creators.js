@@ -294,8 +294,8 @@ export default function CreatorsList(props) {
           console.log(creator);
           newCreators.push({
             index: index + 1,
-            name: creator.Username,
-            profilePic: creator.ProfilePic,
+            name: creator.Username, 
+            profilePic: `https://bitclout.com/api/v0/get-single-profile-picture/${creator.PublicKeyBase58Check}`,
             IsReserved: creator.IsReserved ? "✔️" : "-",
             IsVerified: creator.IsVerified ? "✔️" : "❌",
             coinPrice: computeCoinPrice(creator.CoinPriceBitCloutNanos),

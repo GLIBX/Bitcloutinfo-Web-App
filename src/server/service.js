@@ -12,6 +12,22 @@ export function getBitcloutPrice() {
     });
 };
 
+// export function getProfilePic() {
+//   return axios.post("", {
+//     PublicKeyBase58Check: "",
+//     Username: null,
+//     UsernamePrefix: null,
+//     Description: null,
+//     OrderBy: "influencer_coin_price",
+//     NumToFetch: 140,
+//     ReaderPublicKeyBase58Check:
+//       "BC1YLiZ3Jgat6FKmWR8mcZEyW5JkGghspJtSX3WVijnL87kV1sD9Npo",
+//     ModerationType: "leaderboard",
+//     FetchUsersThatHODL: false,
+//     AddGlobalFeedBool: false,
+//   })
+// }
+
 export function getProfiles() {
   return axios
     .post("https://api-bitclout.herokuapp.com/api/v1/get-profiles", {

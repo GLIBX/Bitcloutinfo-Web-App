@@ -25,7 +25,7 @@ const SideBar = (props) => {
               <Row>
                 <Col md="2">
                   <img
-                    src={gainer.ProfilePic}
+                    src={`https://bitclout.com/api/v0/get-single-profile-picture/${gainer.PublicKeyBase58Check}`}
                     alt="pic"
                     width="15vw"
                     height="15vh"
